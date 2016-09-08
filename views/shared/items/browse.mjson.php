@@ -66,15 +66,23 @@ LEFT JOIN (omeka_files of)
       AND of.mime_type IN ('application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/gif')
       AND (of.order IS NULL OR of.order = 1))
 WHERE oi.id IN ($itemIdList)
+ORDER BY oi.id, of.id
 ";
 
 
 $result_array = $db->fetchAll($sql);
-    
+
+//need to skip extra records when item has more than one image returned,
+//since multiple files for an item may have order = NULL
+$prev_item_id = 0;
 
 if ($result_array) {
    foreach( $result_array as $record )
    {
+	if ($record['id'] == $prev_item_id) {
+	   continue;
+	}
+	
 	//Fix title
 	$record['title'] = html_entity_decode(strip_formatting($record['title']));
 
@@ -112,6 +120,8 @@ if ($result_array) {
 	unset($record['filename']);
 
 	array_push($multipleItemMetadata, $record);
+
+	$prev_item_id = $record['id'];
    }
 }
 
