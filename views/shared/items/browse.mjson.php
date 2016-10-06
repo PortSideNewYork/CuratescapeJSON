@@ -66,7 +66,7 @@ LEFT JOIN (omeka_files of)
       AND of.mime_type IN ('application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/gif')
       AND (of.order IS NULL OR of.order = 1))
 WHERE oi.id IN ($itemIdList)
-ORDER BY oi.id, of.id
+ORDER BY oi.id, of.id;
 ";
 
 
