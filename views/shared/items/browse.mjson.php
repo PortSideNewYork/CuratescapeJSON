@@ -110,7 +110,7 @@ if ($result_array) {
 	//**TODO** Not checking if thumbnail exists before passing back URL
 	if (! is_null($record['filename'])) {
 	     //replace any other extension with .jpg
-	     $filename = preg_replace('/\\.[a-z]{3,4}/', '', $record['filename']) . ".jpg";
+	     $filename = preg_replace('/\\.[A-Za-z]{3,4}/', '', $record['filename']) . ".jpg";
 	     $record['thumbnail'] = WEB_ROOT . "/files/square_thumbnails/$filename";
 	     //$record['thumbnail'] = $filename;
 
